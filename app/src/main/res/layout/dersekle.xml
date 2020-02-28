@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/DersEkle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/DersEkle"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:background="@color/green"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/pzrtsi"
+            android:background="@color/pzt"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="openPzrts"
+            android:text="@string/pazartesi"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/sali"
+            android:background="@color/sl"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="openSali"
+            android:text="@string/sali"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/carsamba"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="openCarsamba"
+            android:text="@string/carsamba"
+            android:background="@color/car"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/persembe"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="openPersembe"
+            android:text="@string/persembe"
+            android:background="@color/per"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/cumaa"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="openCuma"
+            android:text="@string/cumaa"
+            android:background="@color/cuma"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/grup"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

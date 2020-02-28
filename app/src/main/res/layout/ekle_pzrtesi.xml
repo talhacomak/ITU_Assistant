@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spin"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TimePicker
+        android:id="@+id/timer1"
+        android:timePickerMode="spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/dersAdi"
+        android:inputType="text"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/dersAdi"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:importantForAutofill="no" />
+    <EditText
+        android:id="@+id/devamsizlik"
+        android:inputType="numberDecimal"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/devamsızlık"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:importantForAutofill="no" />
+    <EditText
+        android:id="@+id/binaadi"
+        android:inputType="text"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/binaAdi"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:importantForAutofill="no" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kaydet"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/kaydet"/>
+
+</LinearLayout>

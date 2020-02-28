@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.example.myapplication">
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ekle_cikar">
+
+        </activity>
+        <activity android:name=".ekle_pzrtesi_fra">
+
+        </activity>
+        <activity android:name=".devamsizliklar">
+
+        </activity>
+        <activity android:name=".not_ekle">
+
+        </activity>
+        <activity android:name=".gorevEkle"/>
+        <activity android:name=".ayarlar"/>
+        <activity android:name=".not_ekleme_bolumu"/>
+        <activity android:name=".gorev_ekle"/>
+        <activity android:name=".takvim_gorevi"/>
+    </application>
+
+    <dist:module dist:instant="true" />
+
+</manifest>

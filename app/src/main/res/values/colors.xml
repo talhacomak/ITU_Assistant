@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#00D4A3</color>
+    <color name="pzt">#4DD8FF</color>
+    <color name="sl">#00AAD4</color>
+    <color name="car">#03969F</color>
+    <color name="per">#0066D4</color>
+    <color name="cuma">#001CD4</color>
+    <color name="gri">#20272323</color>
+    <color name="red">#86121B</color>
+    <color name="purple">#8D22A0</color>
+    <color name="black">#090808</color>
+    <color name="green">#2C8300</color>
+    <color name="my_white">#FFFFFF</color>
+    <color name="white">#00000000</color>
+    <color name="green_light">#54C216</color>
+</resources>

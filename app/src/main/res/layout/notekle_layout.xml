@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/notdefteri">
+
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:inputType="text"
+        android:id="@+id/button"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="7dp"
+        android:text="@string/buttonEkle"/>
+
+
+
+
+
+</LinearLayout>
