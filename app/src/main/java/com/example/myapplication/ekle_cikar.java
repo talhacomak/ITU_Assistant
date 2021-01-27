@@ -135,7 +135,7 @@ public class ekle_cikar extends AppCompatActivity {
 
             }
 
-        } // ent bundle get extras
+        } // end bundle get extras
 
     }
 

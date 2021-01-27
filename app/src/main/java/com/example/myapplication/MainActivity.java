@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         int day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-        String day = "noday";
+        String day;
         switch (day_of_week){
             case 2:
                 day = "Pazartesi";
