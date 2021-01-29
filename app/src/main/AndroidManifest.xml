@@ -21,7 +21,7 @@
         <activity android:name=".ekle_cikar">
 
         </activity>
-        <activity android:name=".ekle_pzrtesi_fra">
+        <activity android:name=".ekleme_sayfasi">
 
         </activity>
         <activity android:name=".devamsizliklar">

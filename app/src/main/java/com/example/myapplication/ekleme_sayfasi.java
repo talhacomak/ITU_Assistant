@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ekle_pzrtesi_fra extends AppCompatActivity  {
+public class ekleme_sayfasi extends AppCompatActivity  {
     int hour;
     int min;
     String day;
@@ -27,7 +27,7 @@ public class ekle_pzrtesi_fra extends AppCompatActivity  {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ekle_pzrtesi);
+        setContentView(R.layout.ekleme_sayfasi);
 
 
         t1= (TimePicker) findViewById(R.id.timer1);
@@ -86,21 +86,19 @@ public class ekle_pzrtesi_fra extends AppCompatActivity  {
 
         final EditText devamsiz = (EditText) findViewById(R.id.devamsizlik);
 
+        final DatabaseHelper db = new DatabaseHelper(this);
+
         Button btn = (Button) findViewById(R.id.kaydet);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String dersAdi = dersinAdi.getText().toString();
-                final int devamsizlik = Integer.parseInt(devamsiz.getText().toString());
+                //final int devamsizlik = Integer.parseInt(devamsiz.getText().toString());
                 hour = t1.getHour();
                 min = t1.getMinute();
 
+                db.addData(dersAdi, day,hour + ":" + min, "null", "null",  "null");
                 Intent intent = new Intent(c1, ekle_cikar.class);
-                intent.putExtra("hour",  hour);
-                intent.putExtra("min", min);
-                intent.putExtra("day", day);
-                intent.putExtra("dersAdi", dersAdi);
-                intent.putExtra("dvm", devamsizlik);
                 startActivity(intent);
             }
         });

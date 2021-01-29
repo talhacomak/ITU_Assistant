@@ -150,7 +150,7 @@ public class frCumajava extends Fragment {
         btnnew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), ekle_pzrtesi_fra.class);
+                Intent in = new Intent(getActivity(), ekleme_sayfasi.class);
                 in.putExtra("day", "Cuma");
                 in.putExtra("array", minT);
                 in.putExtra("strArray", strArray);
