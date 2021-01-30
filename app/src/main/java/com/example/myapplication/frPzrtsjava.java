@@ -54,7 +54,7 @@ public class frPzrtsjava extends Fragment  {
 
             ders[i].setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
             ders[i].setGravity(Gravity.CENTER);
-            ders[i].setId(100 + i);
+            ders[i].setId(200 + i);
             ders[i].setTextSize(20);
             linNew.addView(ders[i]);
 
@@ -63,20 +63,18 @@ public class frPzrtsjava extends Fragment  {
             dersAdiAr[i] = "-";
         }
 
-        DatabaseHelper db = new DatabaseHelper(c1);
-
-        Cursor txt2 = db.getRows("Pazartesi");
+        DatabaseHelper db = new DatabaseHelper(getActivity());
+        //db.dropTable();
+        //db.addData("asdfsd", "Pazartesi", "asdfas", "sa", "dsa", "asdasdas");
+        Cursor txt2 = db.getRowsByDay("Pazartesi");
         if (txt2 != null ){
-            boolean check = true;
-            for (int i= 0; check; i++){
-                dersAdiAr[i] = txt2.getString(2);
-                startTime[i] = txt2.getString(4);
-                check = txt2.moveToNext();
+            for (int i= 0; txt2.moveToNext(); i++){
+                dersAdiAr[i] = txt2.getString(1);
+                startTime[i] = txt2.getString(3);
             }
         }
-
         for(int i=0; i<startTime.length; i++){
-            if(startTime[i].equals("-") || !days_ar[i].equals("Pazartesi")) continue;
+            if(startTime[i].equals("-")) continue;
             time[i].setText(startTime[i]);
             ders[i].setText(dersAdiAr[i]);
         }

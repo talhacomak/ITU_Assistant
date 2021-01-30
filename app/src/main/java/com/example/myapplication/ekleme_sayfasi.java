@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +21,7 @@ public class ekleme_sayfasi extends AppCompatActivity  {
     int hour;
     int min;
     String day;
-    Context c1 = this;
+    public Context c1 = this;
     TimePicker t1;
     int selection=0;
     static final int Contact_Request = 1;
@@ -37,7 +38,6 @@ public class ekleme_sayfasi extends AppCompatActivity  {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             if(bundle.getString("day") != null){
-                Toast.makeText(getApplicationContext(), "data: " + bundle.getString("day"), Toast.LENGTH_SHORT).show();
                 day = bundle.getString("day");
                 switch (day){
                     case "Pazartesi" : selection = 0;
@@ -97,11 +97,14 @@ public class ekleme_sayfasi extends AppCompatActivity  {
                 hour = t1.getHour();
                 min = t1.getMinute();
 
-                db.addData(dersAdi, day,hour + ":" + min, "null", "null",  "null");
+                if(!db.addData(dersAdi, day, hour + ":" + min, "null", "null",  "null")) toastMessage("an eror occured");
+
                 Intent intent = new Intent(c1, ekle_cikar.class);
                 startActivity(intent);
             }
         });
     }
-
+    public void toastMessage(String message){
+        Toast.makeText(c1, message, Toast.LENGTH_SHORT).show();
+    }
 }

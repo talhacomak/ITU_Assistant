@@ -3,16 +3,16 @@ package com.example.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    private static final String TABLE_NAME = "Classes";
+    private static final String TABLE_NAME = "Dersler";
     private static final String COL1 = "ID";
     private static final String COL2 = "class_name";
     private static final String COL3 = "day";
@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL5 = "time";
     private static final String COL6 = "teacher";
     private static final String COL7 = "classroom";
+
 
 
     public DatabaseHelper(Context context) {
@@ -44,20 +45,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, class_name);
-        contentValues.put(COL2, day);
-        contentValues.put(COL2, start);
-        contentValues.put(COL2, time);
-        contentValues.put(COL2, teacher);
-        contentValues.put(COL2, classroom);
+        contentValues.put(COL3, day);
+        contentValues.put(COL4, start);
+        contentValues.put(COL5, time);
+        contentValues.put(COL6, teacher);
+        contentValues.put(COL7, classroom);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         //if date as inserted incorrectly it will return -1
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        if (result == -1) return false;
+        else return true;
+
     }
 
     public Cursor getAllData(){
@@ -67,27 +66,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getItemID(String class_name){
+    public Cursor getItemID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + COL1 + " FROM " + TABLE_NAME +
-                " WHERE " + COL2 + " = '" + class_name + "'";
+                " WHERE " + COL2 + " = '" + name + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public Cursor getRows(String class_name){
-        Cursor data;
-        try (SQLiteDatabase db = this.getWritableDatabase()) {
-            String query = "SELECT * FROM " + TABLE_NAME +
-                    " WHERE " + COL2 + " = '" + class_name + "'";
-            data = db.rawQuery(query, null);
-        }
-        catch (Exception e){
-            data = null;
-        }
+    public Cursor getRowsByDay(String day){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME +
+                " WHERE " + COL3 + " = '" + day + "'";
+        Cursor data = db.rawQuery(query, null);
         return data;
     }
 
+    /**
+     * Updates the name field
+     * @param newName
+     * @param id
+     * @param oldName
+     */
     public void updateName(String newName, int id, String oldName){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + COL2 +
@@ -98,6 +98,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    /**
+     * Delete from database
+     * @param id
+     * @param name
+     */
     public void deleteName(int id, String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME + " WHERE "
@@ -107,5 +112,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "deleteName: Deleting " + name + " from database.");
         db.execSQL(query);
     }
-}
 
+}
