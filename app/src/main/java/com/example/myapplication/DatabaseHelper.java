@@ -20,7 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL5 = "time";
     private static final String COL6 = "teacher";
     private static final String COL7 = "classroom";
-
+    private static final String createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COL2 + " TEXT NOT NULL, " + COL3 + " TEXT NOT NULL, " + COL4 + " TEXT NOT NULL, " + COL5
+            + " TEXT NOT NULL, " + COL6 + " TEXT, " + COL7 +" TEXT)";
 
 
     public DatabaseHelper(Context context) {
@@ -29,9 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL2 + " TEXT NOT NULL, " + COL3 + " TEXT NOT NULL, " + COL4 + " TEXT NOT NULL, " + COL5
-                + " TEXT NOT NULL, " + COL6 + " TEXT, " + COL7 +" TEXT)";
         db.execSQL(createTable);
     }
 
@@ -39,6 +38,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+    }
+
+    public void deleteTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+    }
+
+    public void createTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(createTable);
     }
 
     public boolean addData(String class_name, String day, String start, String time, String teacher, String classroom) {

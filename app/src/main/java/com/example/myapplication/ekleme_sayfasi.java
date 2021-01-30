@@ -97,14 +97,11 @@ public class ekleme_sayfasi extends AppCompatActivity  {
                 hour = t1.getHour();
                 min = t1.getMinute();
 
-                if(!db.addData(dersAdi, day, hour + ":" + min, "null", "null",  "null")) toastMessage("an eror occured");
+                if(!db.addData(dersAdi, day, hour + ":" + min, "null", "null",  "null")) toastMessage.tM("an error occured", c1);
 
                 Intent intent = new Intent(c1, ekle_cikar.class);
                 startActivity(intent);
             }
         });
-    }
-    public void toastMessage(String message){
-        Toast.makeText(c1, message, Toast.LENGTH_SHORT).show();
     }
 }

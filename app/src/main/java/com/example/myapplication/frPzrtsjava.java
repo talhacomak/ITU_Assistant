@@ -1,6 +1,5 @@
 package com.example.myapplication;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,17 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class frPzrtsjava extends Fragment  {
-    Context c1 = getContext();
-    String days_ar[] = new String[10];
-    String startTime[] = new String[10];
-    String dersAdiAr[] = new String[10];
 
     public frPzrtsjava(){
 
@@ -32,12 +26,14 @@ public class frPzrtsjava extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pztsi, container, false);
+        DatabaseHelper db = new DatabaseHelper(getActivity());
+        Cursor txt2 = db.getRowsByDay("Pazartesi");
 
-        TextView time[] = new TextView[10];
-        TextView ders[] = new TextView[10];
+        TextView time[] = new TextView[20];
+        TextView ders[] = new TextView[20];
 
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.main_layout);
-        for (int i=0; i<10; i++){
+        for (int i=0; txt2.moveToNext(); i++){
             time[i] = new TextView(getContext());
             ders[i] = new TextView(getContext());
 
@@ -58,25 +54,8 @@ public class frPzrtsjava extends Fragment  {
             ders[i].setTextSize(20);
             linNew.addView(ders[i]);
 
-            days_ar[i] = "-";
-            startTime[i] = "-";
-            dersAdiAr[i] = "-";
-        }
-
-        DatabaseHelper db = new DatabaseHelper(getActivity());
-        //db.dropTable();
-        //db.addData("asdfsd", "Pazartesi", "asdfas", "sa", "dsa", "asdasdas");
-        Cursor txt2 = db.getRowsByDay("Pazartesi");
-        if (txt2 != null ){
-            for (int i= 0; txt2.moveToNext(); i++){
-                dersAdiAr[i] = txt2.getString(1);
-                startTime[i] = txt2.getString(3);
-            }
-        }
-        for(int i=0; i<startTime.length; i++){
-            if(startTime[i].equals("-")) continue;
-            time[i].setText(startTime[i]);
-            ders[i].setText(dersAdiAr[i]);
+            time[i].setText(txt2.getString(1));
+            ders[i].setText(txt2.getString(3));
         }
 
 
@@ -91,9 +70,5 @@ public class frPzrtsjava extends Fragment  {
         });
 
         return view;
-    }
-
-    public void toastMessage(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
