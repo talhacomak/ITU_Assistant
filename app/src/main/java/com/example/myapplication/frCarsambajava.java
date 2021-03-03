@@ -25,7 +25,7 @@ public class frCarsambajava extends Fragment  {
     @SuppressLint("ResourceType")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pztsi, container, false);
+        View view = inflater.inflate(R.layout.carsamba, container, false);
         DatabaseHelper db = new DatabaseHelper(getActivity());
         Cursor txt2 = db.getRowsByDay("Carsamba");
 
