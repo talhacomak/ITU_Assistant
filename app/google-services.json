@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "636356444593",
+    "firebase_url": "https://university-asistant-default-rtdb.firebaseio.com",
+    "project_id": "university-asistant",
+    "storage_bucket": "university-asistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636356444593:android:5cff2e45ff39b73fb23d90",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636356444593-1n4fg5jmfg1n1a38tdg0ggumlkctsti4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-lqy6T_sKPhglEEOggVY_1aaXr8gvh0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636356444593-1n4fg5jmfg1n1a38tdg0ggumlkctsti4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

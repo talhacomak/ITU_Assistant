@@ -15,27 +15,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class frCarsambajava extends Fragment  {
+public class frFriday extends Fragment  {
 
-    public frCarsambajava(){
+    public frFriday(){
 
     }
-
-
     @SuppressLint("ResourceType")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.carsamba, container, false);
+        View view = inflater.inflate(R.layout.friday, container, false);
         DatabaseHelper db = new DatabaseHelper(getActivity());
-        Cursor txt2 = db.getRowsByDay("Carsamba");
+        Cursor txt2 = db.getRowsByDay("Friday");
 
         TextView time[] = new TextView[20];
-        TextView ders[] = new TextView[20];
+        TextView className[] = new TextView[20];
 
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.main_layout);
         for (int i=0; txt2.moveToNext(); i++){
             time[i] = new TextView(getContext());
-            ders[i] = new TextView(getContext());
+            className[i] = new TextView(getContext());
 
             LinearLayout linNew = new LinearLayout(getContext());
             linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -48,23 +46,23 @@ public class frCarsambajava extends Fragment  {
             time[i].setTextSize(20);
             linNew.addView(time[i]);
 
-            ders[i].setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
-            ders[i].setGravity(Gravity.CENTER);
-            ders[i].setId(200 + i);
-            ders[i].setTextSize(20);
-            linNew.addView(ders[i]);
+            className[i].setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
+            className[i].setGravity(Gravity.CENTER);
+            className[i].setId(200 + i);
+            className[i].setTextSize(20);
+            linNew.addView(className[i]);
 
             time[i].setText(txt2.getString(1));
-            ders[i].setText(txt2.getString(3));
+            className[i].setText(txt2.getString(3));
         }
 
 
-        Button btnnew = (Button) view.findViewById(R.id.eklemeButonu);
+        Button btnnew = (Button) view.findViewById(R.id.add_button);
         btnnew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), ekleme_sayfasi.class);
-                in.putExtra("day", "Carsamba");
+                Intent in = new Intent(getActivity(), add_class_page.class);
+                in.putExtra("day", "Friday");
                 startActivity(in);
             }
         });

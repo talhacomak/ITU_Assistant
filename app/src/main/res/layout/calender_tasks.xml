@@ -10,7 +10,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/etkinlik"
+            android:hint="@string/activity"
             android:textSize="20dp"/>
     </LinearLayout>
 
@@ -20,7 +20,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/aciklama"
+            android:hint="@string/explanation"
             android:textSize="20dp"/>
     </LinearLayout>
 
@@ -33,7 +33,7 @@
             android:paddingLeft="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/baslangic"
+            android:hint="@string/start"
             android:textSize="20dp"/>
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:paddingLeft="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/bitis"
+            android:hint="@string/end"
             android:textSize="20dp" />
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/Hatırlatıcılar"
+            android:hint="@string/reminder"
             android:textSize="25dp"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -69,7 +69,7 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/Etkinlikten"
+        android:hint="@string/from_activity"
         android:textSize="20dp"/>
 
     <LinearLayout
@@ -88,7 +88,7 @@
             android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/gün"
+            android:hint="@string/day"
             android:textSize="20dp"/>
 
         <ListView
@@ -101,7 +101,7 @@
             android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/saatt"
+            android:hint="@string/hour"
             android:textSize="20dp"/>
 
         <ListView
@@ -113,7 +113,7 @@
             android:paddingTop="7dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/dk"
+            android:hint="@string/min"
             android:textSize="20dp"/>
         <TextView
             android:paddingTop="7dp"
@@ -121,7 +121,7 @@
             android:layout_height="match_parent"
             android:paddingBottom="0dp"
             android:paddingLeft="10dp"
-            android:hint="@string/önce"
+            android:hint="@string/before"
             android:textSize="20dp"/>
     </LinearLayout>
 
@@ -131,7 +131,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/Tekrar"
+            android:hint="@string/repeat"
             android:textSize="20dp"/>
     </LinearLayout>
 </LinearLayout>

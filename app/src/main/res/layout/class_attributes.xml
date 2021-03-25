@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:textStyle="bold"
+                    android:text="@string/code"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/code"
+                    android:textSize="25sp"
+                    android:layout_weight="25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:text="@string/crn"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:layout_weight="25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/crn"
+                    android:textSize="25sp"
+                    android:layout_weight="25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/classname"
+                    android:importantForAutofill="no"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/class_name"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="23sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:importantForAutofill="no"
+                    android:hint="@string/teacher"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/teacher"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="23sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/day"
+                    android:importantForAutofill="no"
+                    android:textSize="23sp" />
+
+                <Spinner
+                    android:id="@+id/spin"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/start_time"
+                    android:importantForAutofill="no"
+                    android:textSize="23sp" />
+
+                <TimePicker
+                    android:id="@+id/start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:timePickerMode="spinner" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/end_time"
+                    android:importantForAutofill="no"
+                    android:textSize="25sp" />
+
+                <TimePicker
+                    android:id="@+id/end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:timePickerMode="spinner" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/building"
+                    android:importantForAutofill="no"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/building"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="67"
+                    android:gravity="center"
+                    android:importantForAutofill="no"
+                    android:textSize="23sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/classroom"
+                    android:importantForAutofill="no"
+                    android:textSize="25sp" />
+
+
+                <EditText
+                    android:id="@+id/classroom"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="67"
+                    android:gravity="center"
+                    android:importantForAutofill="no"
+                    android:textSize="23sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/register" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.myapplication">
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
 
         android:allowBackup="true"
@@ -18,23 +18,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ekle_cikar">
+        <activity android:name=".add_drop_classes">
 
         </activity>
-        <activity android:name=".ekleme_sayfasi">
+        <activity android:name=".add_class_page">
 
         </activity>
-        <activity android:name=".devamsizliklar">
+        <activity android:name=".classAttributes">
 
         </activity>
-        <activity android:name=".not_ekle">
+        <activity android:name=".attendance">
 
         </activity>
-        <activity android:name=".gorevEkle"/>
-        <activity android:name=".ayarlar"/>
-        <activity android:name=".not_ekleme_bolumu"/>
-        <activity android:name=".gorev_ekle"/>
-        <activity android:name=".takvim_gorevi"/>
+        <activity android:name=".add_note">
+
+        </activity>
+        <activity android:name=".settings"/>
+        <activity android:name=".add_note_page"/>
+        <activity android:name=".add_tasks"/>
+        <activity android:name=".calender_tasks"/>
     </application>
 
     <dist:module dist:instant="true" />

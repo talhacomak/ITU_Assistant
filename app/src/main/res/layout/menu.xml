@@ -193,7 +193,7 @@
                 android:layout_row="0"
                 android:layout_margin="12dp"
                 android:layout_columnSpan="1"
-                android:text="@string/bugun"
+                android:text="@string/today"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -206,7 +206,7 @@
                 android:layout_columnSpan="2"
                 android:layout_gravity="fill"
                 android:gravity="center"
-                android:text="@string/ders"
+                android:text="@string/classname"
                 android:textSize="20sp" />
 
             <TextView
@@ -214,7 +214,7 @@
                 android:layout_row="0"
                 android:layout_margin="12dp"
                 android:layout_columnSpan="1"
-                android:text="@string/var"
+                android:text="@string/yes"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -224,7 +224,7 @@
                 android:layout_margin="12dp"
                 android:textColor="@color/black"
                 android:layout_columnSpan="1"
-                android:text="@string/yok"
+                android:text="@string/no"
                 android:textSize="16sp" />
         </GridLayout>
 
@@ -243,8 +243,15 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="@string/buttonEkle"
+                android:text="@string/Add"
                 android:textSize="15sp" />
+        <TextView
+            android:id="@+id/testingDB"
+            android:text="test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"></TextView>
     </LinearLayout>
     </RelativeLayout>
 </ScrollView>

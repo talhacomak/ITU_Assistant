@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class shared_pref {
-    static final String PREF_NAME = "Dosya5";
+    static final String PREF_NAME = "File5";
     public void save(Context context, String PREF_KEY, String VALUE){
         SharedPreferences settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();

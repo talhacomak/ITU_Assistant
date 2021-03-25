@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,17 +11,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    private static final String TABLE_NAME = "Dersler";
+    private static final String TABLE_NAME = "Classes";
     private static final String COL1 = "ID";
-    private static final String COL2 = "class_name";
-    private static final String COL3 = "day";
-    private static final String COL4 = "start_time";
-    private static final String COL5 = "time";
-    private static final String COL6 = "teacher";
-    private static final String COL7 = "classroom";
+    private static final String COL2 = "Code";
+    private static final String COL3 = "building";
+    private static final String COL4 = "className";
+    private static final String COL5 = "classroom";
+    private static final String COL6 = "day1";
+    private static final String COL7 = "ending1";
+    private static final String COL8 = "starting1";
+    private static final String COL9 = "teacher";
+    private static final String COL10 = "CRN";
+    private static final String COL11 = "Attendence";
     private static final String createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL2 + " TEXT NOT NULL, " + COL3 + " TEXT NOT NULL, " + COL4 + " TEXT NOT NULL, " + COL5
-            + " TEXT NOT NULL, " + COL6 + " TEXT, " + COL7 +" TEXT)";
+            COL2 + " TEXT NOT NULL, " + COL3 + " TEXT NOT NULL, " + COL4 + " TEXT NOT NULL, " + COL5 + " TEXT NOT NULL, " +
+            COL6 + " TEXT, " + COL7 +" TEXT, " + COL8 + " TEXT, " + COL9 + " TEXT, " + COL10 + " TEXT, " + COL11 + " INTEGER DEFAULT 0)";
 
 
     public DatabaseHelper(Context context) {
@@ -30,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) { // !!! bu metod çalışmıyor ve silince de hata veriyor
         db.execSQL(createTable);
     }
 
@@ -50,15 +53,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
     }
 
-    public boolean addData(String class_name, String day, String start, String time, String teacher, String classroom) {
+    public boolean addData(String Code, String building, String className, String classroom, String day1,
+                           String ending1, String starting1, String teacher, String crn) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, class_name);
-        contentValues.put(COL3, day);
-        contentValues.put(COL4, start);
-        contentValues.put(COL5, time);
-        contentValues.put(COL6, teacher);
-        contentValues.put(COL7, classroom);
+        contentValues.put(COL10, crn);
+        contentValues.put(COL2, Code);
+        contentValues.put(COL3, building);
+        contentValues.put(COL4, className);
+        contentValues.put(COL5, classroom);
+        contentValues.put(COL6, day1);
+        contentValues.put(COL7, ending1);
+        contentValues.put(COL8, starting1);
+        contentValues.put(COL9, teacher);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
@@ -68,27 +75,133 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateData(String building, String className, String classroom, String day1,
+                           String ending1, String starting1, String teacher, String crn) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL10, crn);
+        contentValues.put(COL3, building);
+        contentValues.put(COL4, className);
+        contentValues.put(COL5, classroom);
+        contentValues.put(COL6, day1);
+        contentValues.put(COL7, ending1);
+        contentValues.put(COL8, starting1);
+        contentValues.put(COL9, teacher);
+
+        String where = "WHERE CRN = '?'";
+        String[] args = new String[1];
+        args[0] = crn;
+
+        long result = db.update(TABLE_NAME, contentValues, where, args);
+
+        //if date as inserted incorrectly it will return -1
+        if (result == -1) return false;
+        else return true;
+
+    }
+
+    public void updateAttendance(int absence, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL11 +
+                " = '" + absence + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + absence);
+        db.execSQL(query);
+    }
+
+    public void updateClassName(String classname, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL4 +
+                " = '" + classname + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + classname);
+        db.execSQL(query);
+    }
+
+    public void updateDay(String day, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL11 +
+                " = '" + day + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + day);
+        db.execSQL(query);
+    }
+
+    public void updateStartTime(String start, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL8 +
+                " = '" + start + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + start);
+        db.execSQL(query);
+    }
+
+    public void updateEndTime(String end, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL7 +
+                " = '" + end + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + end);
+        db.execSQL(query);
+    }
+
+    public void updateBuilding(String building, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL3 +
+                " = '" + building + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + building);
+        db.execSQL(query);
+    }
+
+    public void updateClassroom(String classroom, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL5 +
+                " = '" + classroom + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + classroom);
+        db.execSQL(query);
+    }
+
+    public void updateTeacher(String teacher, int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL9 +
+                " = '" + teacher + "' WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        Log.d(TAG, "updateAttendance: query: " + query);
+        Log.d(TAG, "updateName: Setting attendance to " + teacher);
+        db.execSQL(query);
+    }
+
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        return db.rawQuery(query, null);
+    }
+
+    public Cursor getCRNs(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL10 + " FROM " + TABLE_NAME;
+        return db.rawQuery(query, null);
+    }
+
+
+    public Cursor getRowByCRN(int crn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL10 + " = '" + String.valueOf(crn) + "'";
+        return db.rawQuery(query, null);
     }
 
     public Cursor getItemID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + COL1 + " FROM " + TABLE_NAME +
                 " WHERE " + COL2 + " = '" + name + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        return db.rawQuery(query, null);
     }
 
     public Cursor getRowsByDay(String day){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME +
-                " WHERE " + COL3 + " = '" + day + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL6 + " = '" + day + "'";
+        return db.rawQuery(query, null);
     }
 
     /**

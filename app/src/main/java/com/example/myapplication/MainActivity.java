@@ -1,199 +1,327 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button ekleCikar;
-    Button devamSiz;
-    Button not;
-    Button ayarlar;
+    Button ekleCikar, devamSiz, not, ayarlar, gorev;
     Context c1 = this;
     static final int Contact_Request = 1;
+    FirebaseDatabase remote_db;
+    static DatabaseHelper localDb;
+    DatabaseReference dbref, dbrefCRN;
+    ArrayList<String> values, crns;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu2);
-        Calendar calendar = Calendar.getInstance();
-        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-        String day;
-        switch (day_of_week){
-            case 2:
-                day = "Pazartesi";
-                break;
-            case 3:
-                day = "Sali";
-                break;
-            case 1:
-                day = "Carsamba";
-                break;
-            case 5:
-                day = "Persembe";
-                break;
-            case 6:
-                day = "Cuma";
-                break;
-            default:
-                day = "noday";
-                break;
-        }
 
-        shared_pref sharenew = new shared_pref();
-        Set<String> dersAdi = sharenew.getStringSet(c1, day);
-        Set<String> dersSaati = sharenew.getStringSet(c1, day+"_Saat");
-        Toast.makeText(c1, "asfd", Toast.LENGTH_LONG);
-        if (sharenew.isExist(c1, "day") && sharenew.isExist(c1, day) ){
-            final String[] dersAdiAr = dersAdi.toArray(new String[dersAdi.size()]);
-            String[] dersSaatiAr = dersSaati.toArray(new String[dersSaati.size()]);
-            for (int i=0; i<dersAdiAr.length && i<dersSaatiAr.length; i++){
-                if(dersAdiAr[i] == null) continue;
-
-                LinearLayout layout = (LinearLayout) findViewById(R.id.derslayout);
-
-                LinearLayout linNew = new LinearLayout(this);
-                linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                linNew.setId(i);
-                linNew.setOrientation(LinearLayout.HORIZONTAL);
-                //int id = linNew.getId();
-                layout.addView(linNew);
-
-                TextView newDersSaati = new TextView(this);
-                newDersSaati.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                newDersSaati.setText(dersSaatiAr[i]);
-                newDersSaati.setGravity(Gravity.CENTER);
-                newDersSaati.setTextSize(20);
-                newDersSaati.setTextColor(ContextCompat.getColor(c1, R.color.black));
-                linNew.addView(newDersSaati);
-
-                TextView newDers = new TextView(this);
-                newDers.setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
-                newDers.setText(dersAdiAr[i]);
-                newDers.setGravity(Gravity.CENTER);
-                newDers.setTextSize(20);
-                newDers.setTextColor(ContextCompat.getColor(c1, R.color.black));
-                linNew.addView(newDers);
-
-                //RelativeLayout rl = new RelativeLayout(this);
-                //rl.setLayoutParams();
-
-                //LinearLayout lay = (LinearLayout) findViewById(id);
-
-                RadioGroup rdgr = new RadioGroup(this);
-                rdgr.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                rdgr.setOrientation(LinearLayout.HORIZONTAL);
-                rdgr.setGravity(Gravity.RIGHT);
-                rdgr.setBackgroundColor(ContextCompat.getColor(c1, R.color.gri));
-                linNew.addView(rdgr);
-
-                RadioButton rb1 = new RadioButton(this);
-                rb1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                rb1.setGravity(Gravity.CENTER);
-                rdgr.addView(rb1);
-
-                RadioButton rb2 = new RadioButton(this);
-                rb2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                rb2.setGravity(Gravity.CENTER);
-                rb2.setTextColor(ContextCompat.getColor(c1, R.color.black));
-                final int j = i;
-                final String str = day;
-                rb2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(c1, devamsizliklar.class);
-                        intent.putExtra("false", str);
-                        intent.putExtra("false2", dersAdiAr[j]);
-                        startActivityForResult(intent, Contact_Request);
-                    }
-                });
-                rdgr.addView(rb2);
-
-            }
-        }
-
-
+        remote_db = FirebaseDatabase.getInstance();
+        localDb = new DatabaseHelper(c1);
+        localDb.deleteTable();
+        localDb.createTable();
+        crns = new ArrayList<String>();
+        values = new ArrayList<String>();
 
         ayarlar = (Button) findViewById(R.id.button3);
         devamSiz = (Button) findViewById(R.id.button2);
         ekleCikar = (Button) findViewById(R.id.button);
-        Button gorev = (Button) findViewById(R.id.button5);
+        gorev = (Button) findViewById(R.id.button5);
         not = (Button) findViewById(R.id.button4);
 
         ekleCikar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, ekle_cikar.class);
+                Intent intent = new Intent(c1, add_drop_classes.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
         devamSiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, devamsizliklar.class);
+                Intent intent = new Intent(c1, attendance.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
         not.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, not_ekle.class);
+                Intent intent = new Intent(c1, add_note.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
         ayarlar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, ayarlar.class);
+                Intent intent = new Intent(c1, settings.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
         gorev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, gorev_ekle.class);
+                Intent intent = new Intent(c1, add_tasks.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
+
+        dbref = remote_db.getReference("Students/1/crns");
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot snapshot) {
+                Iterable<DataSnapshot> keys = snapshot.getChildren(); // key'ler remote db'deki CRN'ler
+                for (DataSnapshot key: keys){
+                    Cursor localCRNs = localDb.getAllData();
+                    String xkey = key.getKey();
+                    boolean check = true;
+                    for (int i=0; localCRNs.moveToNext(); i++){  // localdeki CRN'lerle remote'dan gelenleri karşılaştır
+                        String x = localCRNs.getString(10);
+                        if(x.equals(xkey)){
+                            check = false;
+                            break;
+                        }
+                    }
+                    if(check){ // çakışma olmadıysa local db'ye ekle
+                        crns.add(xkey);
+                    }
+                }
+                dbrefCRN = remote_db.getReference("crn");
+                dbrefCRN.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(int i=0; i<crns.size(); i++){
+                            DataSnapshot snapshot2 = snapshot.child(crns.get(i));
+                            Iterable<DataSnapshot> keys = snapshot2.getChildren();
+                            values.add(crns.get(i));
+                            for (DataSnapshot key : keys) {
+                                values.add(key.getValue().toString());
+                            }
+                            boolean res = localDb.addData(values.get(1), values.get(2), values.get(3), values.get(4),
+                                    values.get(5), values.get(6), values.get(7), values.get(8), values.get(0)); // ekleme işlemi için sıralamayı ayarla, key.getValue eklicen
+                            values.clear();
+                        }
+                        ProgmaticViews();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+
+    static class RequestTask_Get1 extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... str) {
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //super.onPostExecute(result);
+
+        }
+
+    }
+
+    public void ProgmaticViews(){
+        final Cursor txt2 = localDb.getRowsByDay(day_of_weekday());
+        for (int i=0; txt2.moveToNext(); i++){
+            LinearLayout layout = (LinearLayout) findViewById(R.id.derslayout);
+
+            LinearLayout linNew = new LinearLayout(c1);
+            linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            linNew.setId(i);
+            linNew.setOrientation(LinearLayout.HORIZONTAL);
+            layout.addView(linNew);
+
+            TextView newClassTime = new TextView(c1);
+            newClassTime.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            newClassTime.setText(txt2.getString(7));
+            newClassTime.setGravity(Gravity.CENTER);
+            newClassTime.setTextSize(20);
+            newClassTime.setTextColor(ContextCompat.getColor(c1, R.color.black));
+            linNew.addView(newClassTime);
+
+            TextView newClassName = new TextView(c1);
+            newClassName.setLayoutParams(new LinearLayout.LayoutParams(745, LinearLayout.LayoutParams.WRAP_CONTENT));
+            newClassName.setText(txt2.getString(3));
+            newClassName.setGravity(Gravity.CENTER);
+            newClassName.setTextSize(20);
+            newClassName.setTextColor(ContextCompat.getColor(c1, R.color.black));
+            linNew.addView(newClassName);
+
+            TextView attendanceView = new TextView(c1);
+            attendanceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            attendanceView.setText((txt2.getString(10) + "/14"));
+            attendanceView.setGravity(Gravity.CENTER);
+            attendanceView.setTextSize(20);
+            attendanceView.setId(txt2.getInt(9)*10);
+            attendanceView.setTextColor(ContextCompat.getColor(c1, R.color.black));
+            linNew.addView(attendanceView);
+
+            final CheckBox attendance = new CheckBox(c1);
+            attendance.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            attendance.setGravity(Gravity.RIGHT);
+            attendance.setBackgroundColor(ContextCompat.getColor(c1, R.color.white));
+            attendance.setId(txt2.getInt(9));
+            attendance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int crn = view.getId();
+                    Cursor rows = localDb.getRowByCRN(crn);
+                    if(rows.moveToNext()){
+                        int att = rows.getInt(10);
+                        TextView attendanceView = findViewById(crn*10);
+                        if(attendance.isChecked()){
+                            attendanceView.setText((att +1 + "/14"));
+                            localDb.updateAttendance(att +1, crn);
+                        }
+                        else{
+                            attendanceView.setText((att -1 + "/14"));
+                            localDb.updateAttendance(att + -1, crn);
+                        }
+                    }
+                }
+            });
+            linNew.addView(attendance);
+
+            /*
+            RadioGroup rdgr = new RadioGroup(c1);
+            rdgr.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            rdgr.setOrientation(LinearLayout.HORIZONTAL);
+            rdgr.setGravity(Gravity.RIGHT);
+            rdgr.setBackgroundColor(ContextCompat.getColor(c1, R.color.grey));
+            linNew.addView(rdgr);
+
+            RadioButton rb1 = new RadioButton(c1);
+            rb1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            rb1.setGravity(Gravity.CENTER);
+            rb1.setId(txt2.getInt(9));
+            rb1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int crn = view.getId();
+                    Cursor rows = localDb.getRowByCRN(crn);
+                    if(rows.moveToNext()){
+                        int att = rows.getInt(10);
+                        localDb.updateAttendance(att + -1, crn);
+                    }
+                }
+            });
+            rdgr.addView(rb1);
+
+            RadioButton rb2 = new RadioButton(c1);
+            rb2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            rb2.setGravity(Gravity.CENTER);
+            rb2.setId(txt2.getInt(9)*10);
+            rb2.setTextColor(ContextCompat.getColor(c1, R.color.black));
+            rb2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int crn = view.getId();
+                    crn /= 10;
+                    Cursor rows = localDb.getRowByCRN(crn);
+                    if(rows.moveToNext()){
+                        int att = rows.getInt(10);
+                        localDb.updateAttendance(att + 1, crn);
+                    }
+                }
+            });
+            rdgr.addView(rb2);
+             */
+        }
+    }
+
+    public static String day_of_weekday(){
+        Calendar calendar = Calendar.getInstance();
+        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
+        String day;
+        switch (day_of_week){
+            case 2:
+                day = "Monday";
+                break;
+            case 3:
+                day = "Tuesday";
+                break;
+            case 1:
+                day = "Wednesday";
+                break;
+            case 5:
+                day = "Thursday";
+                break;
+            case 6:
+                day = "Friday";
+                break;
+            default:
+                day = "noday";
+                break;
+        }
+        return day;
     }
 
     public void open_ders(View view){
-        Intent intent = new Intent(c1, ekle_cikar.class);
+        Intent intent = new Intent(c1, add_drop_classes.class);
         startActivityForResult(intent, Contact_Request);
     }
 
     public void open_dvm(View view){
-        Intent intent = new Intent(c1, devamsizliklar.class);
+        Intent intent = new Intent(c1, attendance.class);
         startActivityForResult(intent, Contact_Request);
     }
 
     public void open_notlar(View view){
-        Intent intent = new Intent(c1, not_ekle.class);
+        Intent intent = new Intent(c1, add_note.class);
         startActivityForResult(intent, Contact_Request);
     }
 
     public void open_settings(View view){
-        Intent intent = new Intent(c1, ayarlar.class);
+        Intent intent = new Intent(c1, settings.class);
         startActivityForResult(intent, Contact_Request);
     }
 
     public void open_calender(View view){
-        Intent intent = new Intent(c1, gorev_ekle.class);
+        Intent intent = new Intent(c1, add_tasks.class);
         startActivityForResult(intent, Contact_Request);
     }
 

@@ -11,13 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 
-public class ayarlar extends AppCompatActivity {
+public class settings extends AppCompatActivity {
     Context c1 = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ayarlar_lay);
+        setContentView(R.layout.settings);
         Intent intent = getIntent();
         Button btn = (Button) findViewById(R.id.btn1);
         btn.setOnClickListener(new View.OnClickListener() {

@@ -21,7 +21,7 @@
     </EditText>
     <Button
         android:id="@+id/kaydet"
-        android:text="@string/kaydet"
+        android:text="@string/register"
         android:textSize="40sp"
         android:background="@color/green"
         android:layout_width="match_parent"

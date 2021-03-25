@@ -12,17 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.myapplication.MainActivity.Contact_Request;
 
-public class not_ekleme_bolumu extends AppCompatActivity {
+public class add_note_page extends AppCompatActivity {
     Context c1 = this;
     int k = -1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.not_ekleme_bolumu);
+        setContentView(R.layout.add_note_page);
         Intent intent = getIntent();
-        if(intent.getStringExtra("not") != null){
+        if(intent.getStringExtra("note") != null){
             TextView text = (TextView) findViewById(R.id.text);
-            text.setText(intent.getStringExtra("not"));
+            text.setText(intent.getStringExtra("note"));
             k = intent.getIntExtra("k",-1);
         }
 
@@ -32,8 +32,8 @@ public class not_ekleme_bolumu extends AppCompatActivity {
             public void onClick(View view) {
                 TextView text = (TextView) findViewById(R.id.text);
                 String str = text.getText().toString();
-                Intent intent = new Intent(c1, not_ekle.class);
-                intent.putExtra("not", str);
+                Intent intent = new Intent(c1, add_note.class);
+                intent.putExtra("note", str);
                 intent.putExtra("k", k);
                 startActivityForResult(intent, Contact_Request);
             }
@@ -44,8 +44,8 @@ public class not_ekleme_bolumu extends AppCompatActivity {
     public void onBackPressed(){
         TextView text = (TextView) findViewById(R.id.text);
         String str = text.getText().toString();
-        Intent intent = new Intent(c1, not_ekle.class);
-        intent.putExtra("not", str);
+        Intent intent = new Intent(c1, add_note.class);
+        intent.putExtra("note", str);
         intent.putExtra("k", k);
         startActivityForResult(intent, Contact_Request);
     }
