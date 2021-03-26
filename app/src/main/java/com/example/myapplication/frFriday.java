@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,8 +42,12 @@ public class frFriday extends Fragment  {
             linNew.setOrientation(LinearLayout.HORIZONTAL);
             layout.addView(linNew);
 
-            time[i].setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
-            time[i].setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200, LinearLayout.LayoutParams.WRAP_CONTENT);
+            final float scale = Objects.requireNonNull(getContext()).getResources().getDisplayMetrics().density;
+            int pixels = (int) (3 * scale + 0.5f);
+            params.setMarginStart(pixels);
+            time[i].setLayoutParams(params);
+            time[i].setGravity(Gravity.START);
             time[i].setId(100 + i);
             time[i].setTextSize(20);
             linNew.addView(time[i]);
