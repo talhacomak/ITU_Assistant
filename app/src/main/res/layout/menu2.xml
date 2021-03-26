@@ -216,14 +216,14 @@
         </LinearLayout>
 
 
-            <Button
+            <!--<Button
                 android:id="@+id/buttonEkle"
                 android:layout_below="@+id/derslayout"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:text="@string/buttonAdd"
-                android:textSize="17sp" />
+                android:textSize="17sp" />-->
 
     </RelativeLayout>
 
