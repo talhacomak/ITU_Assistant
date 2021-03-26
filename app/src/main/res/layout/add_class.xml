@@ -79,9 +79,18 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/grup"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/edittt" />
+    </LinearLayout>
+
 </LinearLayout>

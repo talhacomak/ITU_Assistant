@@ -138,7 +138,9 @@ public class attendance extends AppCompatActivity {
              */
 
             Button seeInfos = new Button(c1);
-            params = new RelativeLayout.LayoutParams(infos_view.getWidth(), newClassName.getLayoutParams().height);
+            final float scale = c1.getResources().getDisplayMetrics().density;
+            int pixels = (int) (30 * scale + 0.5f);
+            params = new RelativeLayout.LayoutParams(pixels, pixels);
             params.addRule(RelativeLayout.ALIGN_START, R.id.infos);
             params.addRule(RelativeLayout.ALIGN_END, R.id.infos);
             if(i == 1){
@@ -148,8 +150,7 @@ public class attendance extends AppCompatActivity {
             seeInfos.setLayoutParams(params);
             seeInfos.setId(crn);
             seeInfos.setGravity(Gravity.RIGHT);
-            seeInfos.setText("+");
-            seeInfos.setBackgroundColor(ContextCompat.getColor(c1, R.color.grey));
+            seeInfos.setBackground(ContextCompat.getDrawable(c1, R.drawable.edittt));
             seeInfos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
