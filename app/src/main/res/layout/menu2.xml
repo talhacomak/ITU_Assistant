@@ -19,7 +19,8 @@
             android:id="@+id/image1"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:src="@drawable/mybook" />
+            android:src="@drawable/mybook"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/button"
@@ -44,7 +45,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:src="@drawable/checklist" />
+            android:src="@drawable/checklist"
+            android:focusable="true" />
 
             <Button
                 android:id="@+id/button2"
@@ -69,7 +71,8 @@
             android:layout_height="120dp"
             android:layout_alignParentStart="true"
             android:layout_below="@id/button"
-            android:src="@drawable/edit" />
+            android:src="@drawable/edit"
+            android:focusable="true" />
 
         <Button
             android:layout_marginLeft="16dp"
@@ -94,7 +97,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
-            android:src="@drawable/settings_blue" />
+            android:src="@drawable/settings_blue"
+            android:focusable="true" />
             <Button
                 android:id="@+id/button3"
                 android:layout_marginRight="15dp"
@@ -118,7 +122,8 @@
             android:layout_height="108dp"
             android:layout_below="@id/button2"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/calender" />
+            android:src="@drawable/calender"
+            android:focusable="true" />
 
 
             <Button
@@ -144,7 +149,8 @@
             android:layout_height="120dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/button3"
-            android:src="@drawable/location" />
+            android:src="@drawable/location"
+            android:focusable="true" />
 
             <Button
                 android:id="@+id/button6"
