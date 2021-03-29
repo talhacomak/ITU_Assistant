@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/DersEkle"
+        android:id="@+id/AddDropClasses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/addDropClasses"
@@ -19,61 +19,61 @@
         >
 
         <Button
-            android:id="@+id/pzrtsi"
+            android:id="@+id/monday"
             android:background="@color/mon"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="openPzrts"
+            android:onClick="viewMonday"
             android:text="@string/monday"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/sali"
+            android:id="@+id/tuesday"
             android:background="@color/tue"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="openSali"
+            android:onClick="viewTuesday"
             android:text="@string/tuesday"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/carsamba"
+            android:id="@+id/wednesday"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="openCarsamba"
+            android:onClick="viewWednesday"
             android:text="@string/wednesday"
             android:background="@color/wed"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/persembe"
+            android:id="@+id/thursday"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="openPersembe"
+            android:onClick="viewThursday"
             android:text="@string/thursday"
             android:background="@color/thu"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/cumaa"
+            android:id="@+id/friday"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="openCuma"
+            android:onClick="viewFriday"
             android:text="@string/friday"
             android:background="@color/fri"
             android:textSize="12sp" />
