@@ -28,7 +28,11 @@
     <string name="addDropClasses">Add/Drop Classes</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="newTask">New Daily Task</string>
+    <string name="newTaskExp">add new task to your daily routine</string>
     <string name="button1">Classes</string>
+    <string name="newClass">New Extra Class</string>
+    <string name="myRoutine">My Routine</string>
     <string name="button2">Attendance</string>
     <string name="button3">Settings</string>
     <string name="button4">Notes</string>

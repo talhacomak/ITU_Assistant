@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class frWednesday extends Fragment  {
@@ -50,17 +51,28 @@ public class frWednesday extends Fragment  {
             params.setMarginStart(pixels);
             time[i].setLayoutParams(params);
             time[i].setGravity(Gravity.START);
-            time[i].setId(100 + i);
+            time[i].setId(i);
             time[i].setTextSize(20);
             linNew.addView(time[i]);
 
             className[i].setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
             className[i].setGravity(Gravity.CENTER);
-            className[i].setId(200 + i);
+            className[i].setId(i*10);
             className[i].setTextSize(20);
             linNew.addView(className[i]);
 
-            time[i].setText(txt2.getString(1));
+            Button delete = new Button(getContext());
+            delete.setId(i*100);
+            delete.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.trash_bin));
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            linNew.addView(delete);
+
+            time[i].setText(txt2.getString(7));
             className[i].setText(txt2.getString(3));
         }
 

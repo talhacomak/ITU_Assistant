@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".add_drop_classes">
+        <activity android:name=".routine">
 
         </activity>
         <activity android:name=".add_class_page">

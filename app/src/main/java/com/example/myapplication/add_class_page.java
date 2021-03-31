@@ -57,7 +57,7 @@ public class add_class_page extends AppCompatActivity  {
 
                 if(!db.addData(class_name, day, hour + ":" + min, "null", "null",  "null", "null", "null", "null")) toastMessage.tM("an error occured", c1);
 
-                Intent intent = new Intent(c1, add_drop_classes.class);
+                Intent intent = new Intent(c1, routine.class);
                 startActivity(intent);
             }
         });

@@ -60,7 +60,7 @@ public class frThursday extends Fragment  {
             className[i].setTextSize(20);
             linNew.addView(className[i]);
 
-            time[i].setText(txt2.getString(1));
+            time[i].setText(txt2.getString(7));
             className[i].setText(txt2.getString(3));
         }
 

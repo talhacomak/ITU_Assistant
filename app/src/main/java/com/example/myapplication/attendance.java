@@ -138,7 +138,7 @@ public class attendance extends AppCompatActivity {
              */
 
             Button seeInfos = new Button(c1);
-            final float scale = c1.getResources().getDisplayMetrics().density;
+            float scale = c1.getResources().getDisplayMetrics().density;
             int pixels = (int) (30 * scale + 0.5f);
             params = new RelativeLayout.LayoutParams(pixels, pixels);
             params.addRule(RelativeLayout.ALIGN_START, R.id.infos);

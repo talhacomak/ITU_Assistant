@@ -6,25 +6,25 @@
     <TextView
         android:id="@+id/AddDropClasses"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/addDropClasses"
-        android:textSize="40sp"
-        android:textColor="@color/black"
-        android:background="@color/tue"
+        android:layout_height="45dp"
+        android:text="@string/myRoutine"
+        android:textSize="30sp"
+        android:textColor="@color/my_white"
+        android:background="@color/my_blue"
         android:gravity="center"/>
     <LinearLayout
+        android:background="@color/my_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/monday"
-            android:background="@color/mon"
+            android:background="@drawable/first_button_shape"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="viewMonday"
             android:text="@string/monday"
@@ -32,11 +32,11 @@
 
         <Button
             android:id="@+id/tuesday"
-            android:background="@color/tue"
+            android:background="@drawable/second_button_shape"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="viewTuesday"
             android:text="@string/tuesday"
@@ -47,11 +47,11 @@
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="viewWednesday"
             android:text="@string/wednesday"
-            android:background="@color/wed"
+            android:background="@drawable/third_button_shape"
             android:textSize="12sp" />
 
         <Button
@@ -59,11 +59,11 @@
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="viewThursday"
             android:text="@string/thursday"
-            android:background="@color/thu"
+            android:background="@drawable/fourth_button_shape"
             android:textSize="12sp" />
 
         <Button
@@ -71,11 +71,11 @@
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_weight=".20"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="viewFriday"
             android:text="@string/friday"
-            android:background="@color/fri"
+            android:background="@drawable/last_button_shape"
             android:textSize="12sp" />
 
     </LinearLayout>

@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-public class add_drop_classes extends AppCompatActivity {
+public class routine extends AppCompatActivity {
     int position=0;
     Context c1 = this;
     FragmentManager manager;
@@ -28,13 +30,21 @@ public class add_drop_classes extends AppCompatActivity {
     public static frFriday myfragFriday;
     public static frFriday myfragFriday1;
 
+
+    Button monday, tuesday, wednesday,thursday, friday;
+
     private GestureDetectorCompat gestureObject;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_class);
+        setContentView(R.layout.routine);
         Intent intent = getIntent();
+        monday = findViewById(R.id.monday);
+        tuesday = findViewById(R.id.tuesday);
+        wednesday = findViewById(R.id.wednesday);
+        thursday = findViewById(R.id.thursday);
+        friday = findViewById(R.id.friday);
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -189,6 +199,11 @@ public class add_drop_classes extends AppCompatActivity {
     public void viewMonday(View v){
 
         position = 0;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragMonday = (frMonday) manager.findFragmentByTag("P");
         if(myfragMonday == null) myfragMonday = new frMonday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -197,6 +212,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewTuesday(View f){
         position = 1;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragTuesday = (frTuesday) manager.findFragmentByTag("S");
         if(myfragTuesday == null) myfragTuesday = new frTuesday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -205,6 +225,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewWednesday(View f){
         position = 2;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragWednesday = (frWednesday) manager.findFragmentByTag("C");
         if(myfragWednesday == null) myfragWednesday = new frWednesday();
 
@@ -214,6 +239,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewThursday(View f){
         position = 3;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragThursday = (frThursday) manager.findFragmentByTag("Per");
         if(myfragThursday == null) myfragThursday = new frThursday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -222,6 +252,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewFriday(View f){
         position = 4;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
         myfragFriday = (frFriday) manager.findFragmentByTag("Cuma");
         if(myfragFriday == null) myfragFriday = new frFriday();
 
@@ -231,8 +266,12 @@ public class add_drop_classes extends AppCompatActivity {
     }
 
     public void viewMonday(){
-
         position = 0;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragMonday = (frMonday) manager.findFragmentByTag("P");
         if(myfragMonday == null) myfragMonday = new frMonday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -241,6 +280,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewTuesday(){
         position = 1;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragTuesday = (frTuesday) manager.findFragmentByTag("S");
         if(myfragTuesday == null) myfragTuesday = new frTuesday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -249,6 +293,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewWednesday(){
         position = 2;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragWednesday = (frWednesday) manager.findFragmentByTag("C");
         if(myfragWednesday == null) myfragWednesday = new frWednesday();
 
@@ -258,6 +307,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewThursday(){
         position = 3;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
         myfragThursday = (frThursday) manager.findFragmentByTag("Per");
         if(myfragThursday == null) myfragThursday = new frThursday();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -266,6 +320,11 @@ public class add_drop_classes extends AppCompatActivity {
     }
     public void viewFriday(){
         position = 4;
+        monday.setBackground(ContextCompat.getDrawable(c1, R.drawable.second_button_shape));
+        tuesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.third_button_shape));
+        wednesday.setBackground(ContextCompat.getDrawable(c1, R.drawable.fourth_button_shape));
+        thursday.setBackground(ContextCompat.getDrawable(c1, R.drawable.last_button_shape));
+        friday.setBackground(ContextCompat.getDrawable(c1, R.drawable.first_button_shape));
         myfragFriday = (frFriday) manager.findFragmentByTag("Cuma");
         if(myfragFriday == null) myfragFriday = new frFriday();
 

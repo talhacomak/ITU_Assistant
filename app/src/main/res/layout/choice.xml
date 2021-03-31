@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_corners"
+    android:layout_gravity="center"
+    android:layout_width="250dp"
+    android:layout_height="150dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corners"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@drawable/rounded_top_button"
+            android:id="@+id/daily_task"
+            android:text="@string/newClass"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@drawable/rounded_bottom_button"
+            android:id="@+id/extra_class"
+            android:textSize="20sp"
+            android:text="@string/newTask"
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

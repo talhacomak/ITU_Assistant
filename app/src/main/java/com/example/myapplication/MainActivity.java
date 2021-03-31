@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.view.Window;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,10 +13,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu2);
+        Window window = ((Activity) c1).getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        //window.setStatusBarColor(ContextCompat.getColor(c1, R.color.black));
 
         remote_db = FirebaseDatabase.getInstance();
         localDb = new DatabaseHelper(c1);
@@ -60,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         ekleCikar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, add_drop_classes.class);
+                Intent intent = new Intent(c1, routine.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
@@ -301,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open_ders(View view){
-        Intent intent = new Intent(c1, add_drop_classes.class);
+        Intent intent = new Intent(c1, routine.class);
         startActivityForResult(intent, Contact_Request);
     }
 
