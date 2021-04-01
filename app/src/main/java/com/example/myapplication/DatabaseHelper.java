@@ -24,8 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL10 = "CRN";
     private static final String COL11 = "Attendence";
     private static final String createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL2 + " TEXT NOT NULL, " + COL3 + " TEXT NOT NULL, " + COL4 + " TEXT NOT NULL, " + COL5 + " TEXT NOT NULL, " +
-            COL6 + " TEXT, " + COL7 +" TEXT, " + COL8 + " TEXT, " + COL9 + " TEXT, " + COL10 + " TEXT, " + COL11 + " INTEGER DEFAULT 0)";
+            COL2 + " TEXT, " + COL3 + " TEXT, " + COL4 + " TEXT NOT NULL, " + COL5 + " TEXT, " +
+            COL6 + " TEXT, " + COL7 +" TEXT, " + COL8 + " TEXT NOT NULL, " + COL9 + " TEXT, " + COL10 + " TEXT, " + COL11 + " INTEGER DEFAULT 0)";
 
 
     public DatabaseHelper(Context context) {
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean updateData(String building, String className, String classroom, String day1,
+    public boolean updateData(int id, String building, String className, String classroom, String day1,
                            String ending1, String starting1, String teacher, String crn) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -88,9 +88,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL8, starting1);
         contentValues.put(COL9, teacher);
 
-        String where = "WHERE CRN = '?'";
+        String where = "ID = ?";
         String[] args = new String[1];
-        args[0] = crn;
+        args[0] = String.valueOf(id);
 
         long result = db.update(TABLE_NAME, contentValues, where, args);
 
@@ -191,6 +191,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    public Cursor getRowByID(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + " = " + id;
+        return db.rawQuery(query, null);
+    }
+
     public Cursor getItemID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + COL1 + " FROM " + TABLE_NAME +
@@ -200,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getRowsByDay(String day){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL6 + " = '" + day + "'";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL6 + " = '" + day + "' ORDER BY " + COL8;
         return db.rawQuery(query, null);
     }
 
@@ -232,6 +238,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " AND " + COL2 + " = '" + name + "'";
         Log.d(TAG, "deleteName: query: " + query);
         Log.d(TAG, "deleteName: Deleting " + name + " from database.");
+        db.execSQL(query);
+    }
+
+    public void deleteById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE "
+                + COL1 + " = " + id;
+        Log.d(TAG, "deleteName: query: " + query);
         db.execSQL(query);
     }
 

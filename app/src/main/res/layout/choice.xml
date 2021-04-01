@@ -15,7 +15,7 @@
         <Button
             style="?android:attr/buttonBarButtonStyle"
             android:background="@drawable/rounded_top_button"
-            android:id="@+id/daily_task"
+            android:id="@+id/extra_class"
             android:text="@string/newClass"
             android:textSize="20sp"
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         <Button
             style="?android:attr/buttonBarButtonStyle"
             android:background="@drawable/rounded_bottom_button"
-            android:id="@+id/extra_class"
+            android:id="@+id/daily_task"
             android:textSize="20sp"
             android:text="@string/newTask"
             android:layout_width="match_parent"

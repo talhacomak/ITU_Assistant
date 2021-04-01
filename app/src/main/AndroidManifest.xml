@@ -21,22 +21,24 @@
         <activity android:name=".routine">
 
         </activity>
-        <activity android:name=".add_class_page">
-
-        </activity>
         <activity android:name=".classAttributes">
 
         </activity>
         <activity android:name=".attendance">
 
         </activity>
-        <activity android:name=".add_note">
+
+        <activity android:name=".add_routine_task">
+
+        </activity>
+
+        <activity android:name=".notes">
 
         </activity>
         <activity android:name=".settings"/>
-        <activity android:name=".add_note_page"/>
-        <activity android:name=".add_tasks"/>
-        <activity android:name=".calender_tasks"/>
+        <activity android:name=".add_note"/>
+        <activity android:name=".tasks"/>
+        <activity android:name=".add_task"/>
     </application>
 
     <dist:module dist:instant="true" />

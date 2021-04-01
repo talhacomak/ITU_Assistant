@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
-import android.view.Window;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -33,7 +30,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button ekleCikar, devamSiz, not, ayarlar, gorev;
+    Button routine, attendance_button, note, settings, tasks;
     Context c1 = this;
     static final int Contact_Request = 1;
     FirebaseDatabase remote_db;
@@ -45,68 +42,66 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu2);
-        Window window = ((Activity) c1).getWindow();
 
+        //Window window = ((Activity) c1).getWindow();
         // clear FLAG_TRANSLUCENT_STATUS flag:
         //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
         // finally change the color
         //window.setStatusBarColor(ContextCompat.getColor(c1, R.color.black));
 
         remote_db = FirebaseDatabase.getInstance();
         localDb = new DatabaseHelper(c1);
-        localDb.deleteTable();
+        //localDb.deleteTable();
         localDb.createTable();
-        crns = new ArrayList<String>();
-        values = new ArrayList<String>();
+        crns = new ArrayList<>();
+        values = new ArrayList<>();
 
-        ayarlar = (Button) findViewById(R.id.button3);
-        devamSiz = (Button) findViewById(R.id.button2);
-        ekleCikar = (Button) findViewById(R.id.button);
-        gorev = (Button) findViewById(R.id.button5);
-        not = (Button) findViewById(R.id.button4);
+        settings = findViewById(R.id.button3);
+        attendance_button = findViewById(R.id.button2);
+        routine = findViewById(R.id.button);
+        tasks = findViewById(R.id.button5);
+        note = findViewById(R.id.button4);
 
-        ekleCikar.setOnClickListener(new View.OnClickListener() {
+        routine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(c1, routine.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
-        devamSiz.setOnClickListener(new View.OnClickListener() {
+        attendance_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(c1, attendance.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
-        not.setOnClickListener(new View.OnClickListener() {
+        note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, add_note.class);
+                Intent intent = new Intent(c1, notes.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
-        ayarlar.setOnClickListener(new View.OnClickListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(c1, settings.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
-        gorev.setOnClickListener(new View.OnClickListener() {
+        tasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, add_tasks.class);
+                Intent intent = new Intent(c1, tasks.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
 
         dbref = remote_db.getReference("Students/1/crns");
-        dbref.addValueEventListener(new ValueEventListener() {
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot snapshot) {
                 Iterable<DataSnapshot> keys = snapshot.getChildren(); // key'ler remote db'deki CRN'ler
@@ -114,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     Cursor localCRNs = localDb.getAllData();
                     String xkey = key.getKey();
                     boolean check = true;
-                    for (int i=0; localCRNs.moveToNext(); i++){  // localdeki CRN'lerle remote'dan gelenleri karşılaştır
-                        String x = localCRNs.getString(10);
+                    while (localCRNs.moveToNext()){  // localdeki CRN'lerle remote'dan gelenleri karşılaştır
+                        String x = localCRNs.getString(9);
                         if(x.equals(xkey)){
                             check = false;
                             break;
@@ -126,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 dbrefCRN = remote_db.getReference("crn");
-                dbrefCRN.addValueEventListener(new ValueEventListener() {
+                dbrefCRN.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(int i=0; i<crns.size(); i++){
@@ -179,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     public void ProgmaticViews(){
         final Cursor txt2 = localDb.getRowsByDay(day_of_weekday());
         for (int i=0; txt2.moveToNext(); i++){
-            LinearLayout layout = (LinearLayout) findViewById(R.id.derslayout);
+            LinearLayout layout = findViewById(R.id.derslayout);
 
             LinearLayout linNew = new LinearLayout(c1);
             linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -189,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
             TextView newClassTime = new TextView(c1);
             newClassTime.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            newClassTime.setText(txt2.getString(7));
+            newClassTime.setText(txt2.getString(7)); // start time
             newClassTime.setGravity(Gravity.CENTER);
             newClassTime.setTextSize(20);
             newClassTime.setTextColor(ContextCompat.getColor(c1, R.color.black));
@@ -197,11 +192,13 @@ public class MainActivity extends AppCompatActivity {
 
             TextView newClassName = new TextView(c1);
             newClassName.setLayoutParams(new LinearLayout.LayoutParams(745, LinearLayout.LayoutParams.WRAP_CONTENT));
-            newClassName.setText(txt2.getString(3));
+            newClassName.setText(txt2.getString(3)); // class or task name
             newClassName.setGravity(Gravity.CENTER);
             newClassName.setTextSize(20);
             newClassName.setTextColor(ContextCompat.getColor(c1, R.color.black));
             linNew.addView(newClassName);
+
+            if(txt2.getString(9).equals("-1")) continue; // if it is a task
 
             TextView attendanceView = new TextView(c1);
             attendanceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -214,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
             final CheckBox attendance = new CheckBox(c1);
             attendance.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            attendance.setGravity(Gravity.RIGHT);
+            attendance.setGravity(Gravity.END);
             attendance.setBackgroundColor(ContextCompat.getColor(c1, R.color.white));
             attendance.setId(txt2.getInt(9));
             attendance.setOnClickListener(new View.OnClickListener() {
@@ -323,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open_notlar(View view){
-        Intent intent = new Intent(c1, add_note.class);
+        Intent intent = new Intent(c1, notes.class);
         startActivityForResult(intent, Contact_Request);
     }
 
@@ -333,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open_calender(View view){
-        Intent intent = new Intent(c1, add_tasks.class);
+        Intent intent = new Intent(c1, tasks.class);
         startActivityForResult(intent, Contact_Request);
     }
 

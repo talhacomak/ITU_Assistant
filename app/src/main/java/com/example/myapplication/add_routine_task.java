@@ -21,36 +21,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.myapplication.MainActivity.localDb;
 
-public class classAttributes extends AppCompatActivity  {
+public class add_routine_task extends AppCompatActivity {
     public Context c1 = this;
-    int id;
-    TextView tw1, tw2, tw3, tw4, tw5, tw6, tw7, code, crn_view;
-    EditText classname, teacher, building, classroom;
+    TextView tw1, tw2, tw3, tw4, tw5, tw6;
+    EditText task_name, location, room;
     TimePicker start_time, end_time;
     String day;
+    int id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.class_attributes);
-        classname = findViewById(R.id.class_name);
-        teacher = findViewById(R.id.teacher);
-        building = findViewById(R.id.building);
-        classroom = findViewById(R.id.classroom);
-        code = findViewById(R.id.code);
-        crn_view = findViewById(R.id.crn);
+        setContentView(R.layout.add_routine_task);
+        task_name = findViewById(R.id.task_name);
+        location = findViewById(R.id.location);
+        room = findViewById(R.id.room);
         start_time = findViewById(R.id.start_time);
         end_time = findViewById(R.id.end_time);
 
-        id = getIntent().getIntExtra("id", -1); // crn of lecture to show
+        id = getIntent().getIntExtra("id", -1);
         if(id != -1){
             Cursor row = localDb.getRowByID(id);
             if(row.moveToNext()){
-                if(row.getString(3) != null) classname.setText(row.getString(3));
-                if(row.getString(8) != null) teacher.setText(row.getString(8));
-                if(row.getString(2) != null) building.setText(row.getString(2));
-                if(row.getString(4) != null) classroom.setText(row.getString(4));
-                if(row.getString(1) != null) code.setText(row.getString(1));
-                if(row.getString(9) != null) crn_view.setText(row.getString(9));
+                if(row.getString(3) != null) task_name.setText(row.getString(3));
+                if(row.getString(2) != null) location.setText(row.getString(2));
+                if(row.getString(4) != null) room.setText(row.getString(4));
 
                 day = row.getString(5);
 
@@ -63,27 +58,23 @@ public class classAttributes extends AppCompatActivity  {
                 end_time.setMinute(Integer.parseInt(end[1]));
             }
         }
-        else{
-            day = getIntent().getStringExtra("day");
-            code.setText("-");
-            crn_view.setText("-");
-        }
 
-        select_day();
+        day = getIntent().getStringExtra("day");
         set_layouts();
+        select_day();
         Button register = findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(id == -1) { // add new data
-                    localDb.addData("-", building.getText().toString(), classname.getText().toString(), classroom.getText().toString(),
+                if(id == -1) {
+                    boolean res = localDb.addData(null, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
                             day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), teacher.getText().toString(), "-");
+                                    start_time.getMinute(), null, "-1");
                 }
-                else {  // update the data
-                    localDb.updateData(id, building.getText().toString(), classname.getText().toString(), classroom.getText().toString(),
+                else {
+                    boolean res = localDb.updateData(id, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
                             day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), teacher.getText().toString(), crn_view.getText().toString());
+                                    start_time.getMinute(), null, "-1");
                 }
                 Intent in = new Intent(c1, routine.class);
                 startActivity(in);
@@ -98,22 +89,19 @@ public class classAttributes extends AppCompatActivity  {
         tw4 = findViewById(R.id.textView4);
         tw5 = findViewById(R.id.textView5);
         tw6 = findViewById(R.id.textView6);
-        tw7 = findViewById(R.id.textView7);
-        tw1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        tw3.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                tw1.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int theWidth = tw1.getWidth();
+                tw3.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int theWidth = tw3.getWidth();
                 tw2.setWidth(theWidth);
-                tw3.setWidth(theWidth);
+                tw1.setWidth(theWidth);
                 tw4.setWidth(theWidth);
                 tw5.setWidth(theWidth);
                 tw6.setWidth(theWidth);
-                tw7.setWidth(theWidth);
             }
         });
     }
-
     public void select_day(){
         Spinner sp = findViewById(R.id.spin);
         ArrayList<String> list = new ArrayList<>();
@@ -122,7 +110,7 @@ public class classAttributes extends AppCompatActivity  {
         list.add(getString(R.string.wednesday));
         list.add(getString(R.string.thursday));
         list.add(getString(R.string.friday));
-        ArrayAdapter<String> adapter_list = new ArrayAdapter<String>(c1, R.layout.spinner_style, list);
+        ArrayAdapter<String> adapter_list = new ArrayAdapter<>(c1, R.layout.spinner_style, list);
         sp.setAdapter(adapter_list);
         final int selection = convert_day_to_number.convert(day);
         sp.setSelection(selection);

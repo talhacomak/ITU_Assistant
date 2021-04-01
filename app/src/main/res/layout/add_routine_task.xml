@@ -24,33 +24,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
+                    android:gravity="center"
                     android:textStyle="bold"
-                    android:text="@string/code"
+                    android:text="@string/routineTask"
                     android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/code"
-                    android:textSize="25sp"
-                    android:layout_weight="25"
-                    android:text="-"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:text="@string/crn"
-                    android:textStyle="bold"
-                    android:textSize="25sp"
-                    android:layout_weight="25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:id="@+id/crn"
-                    android:textSize="25sp"
-                    android:layout_weight="25"
-                    android:text="-"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -63,12 +40,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="@string/classname"
+                    android:hint="@string/task"
                     android:importantForAutofill="no"
                     android:textSize="25sp" />
 
                 <EditText
-                    android:id="@+id/class_name"
+                    android:id="@+id/task_name"
                     style="@android:style/Widget.AutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,31 +60,6 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    style="@android:style/Widget.AutoCompleteTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:importantForAutofill="no"
-                    android:hint="@string/teacher"
-                    android:textSize="25sp" />
-
-                <EditText
-                    android:id="@+id/teacher"
-                    style="@android:style/Widget.AutoCompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="23sp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/textView3"
                     style="@android:style/Widget.AutoCompleteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,7 +82,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/textView3"
                     style="@android:style/Widget.AutoCompleteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,12 +129,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="@string/building"
+                    android:hint="@string/location"
                     android:importantForAutofill="no"
                     android:textSize="25sp" />
 
                 <EditText
-                    android:id="@+id/building"
+                    android:id="@+id/location"
                     style="@android:style/Widget.AutoCompleteTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -203,13 +155,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="@string/classroom"
+                    android:hint="@string/room"
                     android:importantForAutofill="no"
                     android:textSize="25sp" />
 
 
                 <EditText
-                    android:id="@+id/classroom"
+                    android:id="@+id/room"
                     style="@android:style/Widget.AutoCompleteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

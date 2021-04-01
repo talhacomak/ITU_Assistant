@@ -33,6 +33,7 @@
     <string name="button1">Classes</string>
     <string name="newClass">New Extra Class</string>
     <string name="myRoutine">My Routine</string>
+    <string name="routine">Routine</string>
     <string name="button2">Attendance</string>
     <string name="button3">Settings</string>
     <string name="button4">Notes</string>
@@ -47,5 +48,9 @@
     <string name="hour">Hour</string>
     <string name="code">Code:</string>
     <string name="crn">CRN:</string>
+    <string name="routineTask">Routine Task</string>
     <string name="att">Att.</string>
+    <string name="room">Room</string>
+    <string name="task">Task</string>
+    <string name="location">Location</string>
 </resources>

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,11 +34,14 @@ public class attendance extends AppCompatActivity {
         classname_view = findViewById(R.id.class_name_view);
         attendance_view = findViewById(R.id.attendance_view);
         infos_view = findViewById(R.id.infos);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.main_layout);
+        RelativeLayout layout = findViewById(R.id.main_layout);
         for (int i=1; txt2.moveToNext(); i++){
-            int crn = Integer.parseInt(txt2.getString(9));
+            if(txt2.getString(9).equals("-1") || txt2.getString(9).equals("0")) {
+                i--;
+                continue;
+            }
 
-            TextView newClassName = new TextView(c1);
+            final TextView newClassName = new TextView(c1);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(classname_view.getWidth(), RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.ALIGN_START, R.id.class_name_view);
             params.addRule(RelativeLayout.ALIGN_END, R.id.class_name_view);
@@ -53,8 +57,8 @@ public class attendance extends AppCompatActivity {
             newClassName.setTextColor(ContextCompat.getColor(c1, R.color.black));
             layout.addView(newClassName);
 
-            TextView newClassDay = new TextView(c1);
-            params = new RelativeLayout.LayoutParams(day_view.getWidth(), params.height);
+            final TextView newClassDay = new TextView(c1);
+            params = new RelativeLayout.LayoutParams(day_view.getWidth(), newClassName.getLayoutParams().height);
             params.addRule(RelativeLayout.ALIGN_START, R.id.day_view);
             params.addRule(RelativeLayout.ALIGN_END, R.id.day_view);
             if(i == 1){
@@ -68,7 +72,7 @@ public class attendance extends AppCompatActivity {
             newClassDay.setTextColor(ContextCompat.getColor(c1, R.color.black));
             layout.addView(newClassDay);
 
-            TextView attendance = new TextView(c1);
+            final TextView attendance = new TextView(c1);
             params = new RelativeLayout.LayoutParams(attendance_view.getWidth(), newClassName.getLayoutParams().height);
             params.addRule(RelativeLayout.ALIGN_START, R.id.attendance_view);
             params.addRule(RelativeLayout.ALIGN_END, R.id.attendance_view);
@@ -83,61 +87,7 @@ public class attendance extends AppCompatActivity {
             attendance.setTextColor(ContextCompat.getColor(c1, R.color.black));
             layout.addView(attendance);
 
-            /*
-            Button increaseAtt = new Button(c1);
-            params = new RelativeLayout.LayoutParams(attendance_view.getWidth()/2, newClassName.getLayoutParams().height);
-            params.addRule(RelativeLayout.START_OF, crn*1000);
-            if(i == 1){
-                params.addRule(RelativeLayout.BELOW, R.id.day_view);
-            }
-            else params.addRule(RelativeLayout.BELOW, i-1);
-            increaseAtt.setLayoutParams(params);
-            attendance.setId(crn);
-            increaseAtt.setText("-");
-            increaseAtt.setBackgroundColor(ContextCompat.getColor(c1, R.color.gri));
-            increaseAtt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int crn = view.getId();
-                    Cursor rows = localDb.getRowByCRN(crn);
-                    if(rows.moveToNext()){
-                        int att = rows.getInt(10);
-                        localDb.updateAttendance(att + -1, crn);
-                    }
-                }
-            });
-            layout.addView(increaseAtt);
-
-            Button decreaseAtt = new Button(c1);
-            params = new RelativeLayout.LayoutParams(attendance_view.getWidth()/2, newClassName.getLayoutParams().height);
-            params.addRule(RelativeLayout.START_OF, crn);
-            if(i == 1){
-                params.addRule(RelativeLayout.BELOW, R.id.day_view);
-            }
-            else params.addRule(RelativeLayout.BELOW, i-1);
-            params.width = attendance_view.getWidth()/6;
-            params.height = newClassName.getLayoutParams().height;
-            decreaseAtt.setLayoutParams(params);
-            attendance.setId(crn*10);
-            decreaseAtt.setGravity(Gravity.END);
-            decreaseAtt.setText("+");
-            decreaseAtt.setBackgroundColor(ContextCompat.getColor(c1, R.color.gri));
-            decreaseAtt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int crn = view.getId();
-                    crn /= 10;
-                    Cursor rows = localDb.getRowByCRN(crn);
-                    if(rows.moveToNext()){
-                        int att = rows.getInt(10);
-                        localDb.updateAttendance(att +1, crn);
-                    }
-                }
-            });
-            layout.addView(decreaseAtt);
-             */
-
-            Button seeInfos = new Button(c1);
+            final Button seeInfos = new Button(c1);
             float scale = c1.getResources().getDisplayMetrics().density;
             int pixels = (int) (30 * scale + 0.5f);
             params = new RelativeLayout.LayoutParams(pixels, pixels);
@@ -148,19 +98,30 @@ public class attendance extends AppCompatActivity {
             }
             else params.addRule(RelativeLayout.BELOW, i-1);
             seeInfos.setLayoutParams(params);
-            seeInfos.setId(crn);
+            seeInfos.setId(txt2.getInt(0));
             seeInfos.setGravity(Gravity.RIGHT);
             seeInfos.setBackground(ContextCompat.getDrawable(c1, R.drawable.edittt));
             seeInfos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int crn = view.getId();
+                    int id = view.getId();
                     Intent intent = new Intent(c1, classAttributes.class);
-                    intent.putExtra("crn", crn);
+                    intent.putExtra("id", id);
                     startActivityForResult(intent, 1);
                 }
             });
             layout.addView(seeInfos);
+
+            newClassName.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    newClassName.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int pix = newClassName.getWidth();
+                    newClassDay.setWidth(pix);
+                    attendance.setWidth(pix);
+                    seeInfos.setHeight(pix);
+                }
+            });
         }
     }
 }

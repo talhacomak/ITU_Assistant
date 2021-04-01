@@ -11,20 +11,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.myapplication.MainActivity.Contact_Request;
 
-public class add_tasks extends AppCompatActivity {
+public class tasks extends AppCompatActivity {
     Context c1 = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_tasks);
+        setContentView(R.layout.tasks);
         Intent intent = getIntent();
 
         Button btn = (Button) findViewById(R.id.add_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(c1, calender_tasks.class);
+                Intent in = new Intent(c1, add_task.class);
                 startActivityForResult(in, Contact_Request);
             }
         });

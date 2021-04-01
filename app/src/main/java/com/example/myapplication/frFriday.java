@@ -67,7 +67,7 @@ public class frFriday extends Fragment  {
         btnnew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), add_class_page.class);
+                Intent in = new Intent(getActivity(), classAttributes.class);
                 in.putExtra("day", "Friday");
                 startActivity(in);
             }

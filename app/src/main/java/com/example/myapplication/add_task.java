@@ -11,7 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class calender_tasks extends AppCompatActivity {
+public class add_task extends AppCompatActivity {
     Context c1 = this;
     ListView list1;
     ListView list2;
@@ -29,8 +29,8 @@ public class calender_tasks extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_task);
         Intent intent = getIntent();
-        setContentView(R.layout.calender_tasks);
         list1 = (ListView) findViewById(R.id.l1);
         list2 = (ListView) findViewById(R.id.l2);
         list3 = (ListView) findViewById(R.id.l3);
