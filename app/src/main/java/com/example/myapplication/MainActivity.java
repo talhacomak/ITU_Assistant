@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    static class RequestTask_Get1 extends AsyncTask<String, String, String> {
+    static class RequestTask_Get1 extends AsyncTask<String, String, String> { // ilki gelen parametre ikincisi alt fonksiyona giden üçüncüsü return value gibi bişeydi
         @Override
         protected String doInBackground(String... str) {
 
@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void ProgmaticViews(){
         final Cursor txt2 = localDb.getRowsByDay(day_of_weekday());
+        LinearLayout layout = findViewById(R.id.derslayout);
+        layout.removeAllViews();
         for (int i=0; txt2.moveToNext(); i++){
-            LinearLayout layout = findViewById(R.id.derslayout);
-
             LinearLayout linNew = new LinearLayout(c1);
             linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             linNew.setId(i);

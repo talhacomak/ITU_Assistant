@@ -8,5 +8,12 @@
         <item name="colorAccent">@color/my_blue</item>
     </style>
 
+    <style name="SpinnerDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="SpinnerTimePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
 </resources>

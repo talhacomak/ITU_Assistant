@@ -8,7 +8,7 @@
     <string name="attendance">Attendance</string>
     <string name="Add">+</string>
 
-    <string name="activity">Activity Name</string>
+    <string name="activity">Activity</string>
     <string name="start">Start</string>
     <string name="end">End</string>
     <string name="reminder">Reminders</string>
@@ -51,6 +51,7 @@
     <string name="routineTask">Routine Task</string>
     <string name="att">Att.</string>
     <string name="room">Room</string>
+    <string name="date">Date</string>
     <string name="task">Task</string>
     <string name="location">Location</string>
 </resources>
