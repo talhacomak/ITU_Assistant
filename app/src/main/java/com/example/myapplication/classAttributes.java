@@ -77,18 +77,25 @@ public class classAttributes extends AppCompatActivity  {
             public void onClick(View v) {
                 if(id == -1) { // add new data
                     localDb.addData("-", building.getText().toString(), classname.getText().toString(), classroom.getText().toString(),
-                            day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), teacher.getText().toString(), "-");
+                            day, end_time.getHour() + ":" + getMinuteFormat(end_time.getMinute()), start_time.getHour() + ":" +
+                                    getMinuteFormat(start_time.getMinute()), teacher.getText().toString(), "-");
                 }
                 else {  // update the data
                     localDb.updateData(id, building.getText().toString(), classname.getText().toString(), classroom.getText().toString(),
-                            day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), teacher.getText().toString(), crn_view.getText().toString());
+                            day, end_time.getHour() + ":" + getMinuteFormat(end_time.getMinute()), start_time.getHour() + ":" +
+                                    getMinuteFormat(start_time.getMinute()), teacher.getText().toString(), crn_view.getText().toString());
                 }
                 Intent in = new Intent(c1, routine.class);
                 startActivity(in);
             }
         });
+    }
+
+    private String getMinuteFormat(int minute) {
+        if(minute<10)
+            return "0" + minute;
+        else
+            return String.valueOf(minute);
     }
 
     public void set_layouts(){

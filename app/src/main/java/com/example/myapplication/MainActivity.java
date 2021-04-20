@@ -1,10 +1,7 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -23,25 +20,41 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.skyhope.eventcalenderlibrary.ActivityDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity implements UpdateHelper.OnUpdateCheckListener {
 
     Button routine, attendance_button, note, settings, tasks;
     Context c1 = this;
     static final int Contact_Request = 1;
     FirebaseDatabase remote_db;
-    static DatabaseHelper localDb;
+    static RoutineDatabase localDb;
     DatabaseReference dbref, dbrefCRN;
     ArrayList<String> values, crns;
+    ActivityDatabase activityDB;
+    Button test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu2);
+
+        test = findViewById(R.id.test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(c1, test_camera.class);
+                startActivity(in);
+            }
+        });
 
         //Window window = ((Activity) c1).getWindow();
         // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -52,9 +65,13 @@ public class MainActivity extends AppCompatActivity {
         //window.setStatusBarColor(ContextCompat.getColor(c1, R.color.black));
 
         remote_db = FirebaseDatabase.getInstance();
-        localDb = new DatabaseHelper(c1);
+        localDb = new RoutineDatabase(c1);
         //localDb.deleteTable();
         localDb.createTable();
+        activityDB = new ActivityDatabase(c1);
+        //activityDB.deleteTable();
+        activityDB.createTable();
+
         crns = new ArrayList<>();
         values = new ArrayList<>();
 
@@ -95,45 +112,81 @@ public class MainActivity extends AppCompatActivity {
         tasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c1, tasks.class);
+                Intent intent = new Intent(c1, activities.class);
                 startActivityForResult(intent, Contact_Request);
             }
         });
 
-        dbref = remote_db.getReference("Students/1/crns");
+        dbref = remote_db.getReference("Students/1/crns");  // student 1 for testing for now
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot snapshot) {
-                Iterable<DataSnapshot> keys = snapshot.getChildren(); // key'ler remote db'deki CRN'ler
+                Iterable<DataSnapshot> keys = snapshot.getChildren(); // keys are CRN's in the remote DB
                 for (DataSnapshot key: keys){
-                    Cursor localCRNs = localDb.getAllData();
-                    String xkey = key.getKey();
-                    boolean check = true;
-                    while (localCRNs.moveToNext()){  // localdeki CRN'lerle remote'dan gelenleri karşılaştır
-                        String x = localCRNs.getString(9);
-                        if(x.equals(xkey)){
-                            check = false;
-                            break;
-                        }
-                    }
-                    if(check){ // çakışma olmadıysa local db'ye ekle
-                        crns.add(xkey);
-                    }
+                    crns.add(key.getKey());
                 }
                 dbrefCRN = remote_db.getReference("crn");
                 dbrefCRN.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    public void onDataChange(@NonNull DataSnapshot CRNsSnapshot) {
                         for(int i=0; i<crns.size(); i++){
-                            DataSnapshot snapshot2 = snapshot.child(crns.get(i));
-                            Iterable<DataSnapshot> keys = snapshot2.getChildren();
-                            values.add(crns.get(i));
-                            for (DataSnapshot key : keys) {
-                                values.add(key.getValue().toString());
-                            }
-                            boolean res = localDb.addData(values.get(1), values.get(2), values.get(3), values.get(4),
-                                    values.get(5), values.get(6), values.get(7), values.get(8), values.get(0)); // ekleme işlemi için sıralamayı ayarla, key.getValue eklicen
                             values.clear();
+                            DataSnapshot crn_i = CRNsSnapshot.child(crns.get(i));
+                            Iterable<DataSnapshot> childrenOfTheCRN = crn_i.getChildren();
+                            Cursor localCRNs = localDb.getAllData();
+                            boolean check = true;
+                            while (localCRNs.moveToNext()){  // compare CRN's comes from remote DB with on locale
+                                String localCrn = localCRNs.getString(9);
+                                if(localCrn.equals(crns.get(i))){
+                                    check = false;
+                                    break;
+                                }
+                            }
+                            // adding content of class into local DB
+                            values.add(crns.get(i));
+                            for (DataSnapshot childOfCRN : childrenOfTheCRN) {
+                                if(childOfCRN.getKey().contains("Exam")){
+                                    String crn = values.get(0);
+                                    ArrayList<String> activityDataList = new ArrayList<>();
+                                    Iterable<DataSnapshot> activityData = childOfCRN.getChildren();
+                                    for(DataSnapshot data : activityData){
+                                        activityDataList.add(data.getValue().toString());
+                                    }
+                                    if(activityDB.getRowByCRN(crn + childOfCRN.getKey()).moveToFirst()){
+                                        long res = activityDB.updateDataByCRN(crn + childOfCRN.getKey(),
+                                                childOfCRN.getKey(), "at: " + activityDataList.get(1),
+                                                activityDataList.get(0), activityDataList.get(1), activityDataList.get(1), 1);
+                                    }
+                                    else
+                                        activityDB.addData(childOfCRN.getKey(), crn + childOfCRN.getKey(), activityDataList.get(1),
+                                                activityDataList.get(1), 1, "at: " +
+                                                        activityDataList.get(1), activityDataList.get(0));
+                                }
+                                else if(childOfCRN.getKey().contains("Homework")){
+                                    String crn = values.get(0);
+                                    ArrayList<String> activityDataList = new ArrayList<>();
+                                    Iterable<DataSnapshot> activityData = childOfCRN.getChildren();
+                                    String activity_name = childOfCRN.getKey();
+                                    for(DataSnapshot data : activityData){
+                                        activityDataList.add(data.getValue().toString());
+                                    }
+                                    if(activityDB.getRowByCRN(crn + activity_name).moveToFirst()){
+                                        long res = activityDB.updateDataByCRN(crn + activity_name,
+                                                childOfCRN.getKey(), "deadline: " + activityDataList.get(1),
+                                                activityDataList.get(0), activityDataList.get(1), activityDataList.get(1), 2);
+                                    }
+                                    else{
+                                        int res = activityDB.addData(activity_name, crn + activity_name, activityDataList.get(1), activityDataList.get(1), 2,
+                                                "deadline: " + activityDataList.get(1), activityDataList.get(0));
+                                    }
+                                }
+                                else
+                                    values.add(childOfCRN.getValue().toString());
+                            }
+
+                            if(!check) continue;
+                            long res = localDb.addData(values.get(1), values.get(2), values.get(3), values.get(4),
+                                    values.get(5), values.get(6), values.get(7), values.get(8), values.get(0));
                         }
                         ProgmaticViews();
                     }
@@ -150,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        UpdateHelper.with(c1).onUpdateCheck(this).check();
 
     }
 
@@ -293,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 day = "Tuesday";
                 break;
-            case 1:
+            case 4:
                 day = "Wednesday";
                 break;
             case 5:
@@ -330,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open_calender(View view){
-        Intent intent = new Intent(c1, tasks.class);
+        Intent intent = new Intent(c1, activities.class);
         startActivityForResult(intent, Contact_Request);
     }
 
@@ -346,5 +401,23 @@ public class MainActivity extends AppCompatActivity {
     }
     public void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUpdateCheckListener(final String urlApp){
+        AlertDialog alertDialog = new AlertDialog.Builder(c1).setTitle("New Version Available")
+                .setMessage("Please update to new version to continue us")
+                .setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(c1, "" + urlApp, Toast.LENGTH_SHORT).show(); // replace with Action View to install app
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
     }
 }

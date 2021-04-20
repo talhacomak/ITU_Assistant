@@ -1,20 +1,28 @@
 <resources>
+    <string name="roboto_light">sans-serif-light</string>
+    <string name="number_picker_formatter">%02d</string>
+
+    <string name="test"><b> test </b><br/>test</string>
+    <string name="before">Before:</string>
+    <string name="at">at:</string>
+    <string name="alarm">Alarm</string>
     <string name="app_name">Student Assistant</string>
     <string name="register">Register</string>
     <string name="noHint"> </string>
     <string name="reset">Reset</string>
     <string name="today">Today:</string>
-    <string name="day">Day</string>
+    <string name="days">day(s)</string>
     <string name="attendance">Attendance</string>
     <string name="Add">+</string>
-
+    <string name="stop_alarm">Stop the Alarm</string>
     <string name="activity">Activity</string>
     <string name="start">Start</string>
     <string name="end">End</string>
     <string name="reminder">Reminders</string>
     <string name="from_activity">From Activity:</string>
-    <string name="before">before</string>
+    <string name="day_before">day before</string>
     <string name="min">min</string>
+    <string name="the_day">Day</string>
     <string name="explanation">Explanation</string>
     <string name="repetition">Repetition</string>
     <string name="monday">Monday</string>
@@ -22,7 +30,7 @@
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
-    <string name="time">Time</string>
+    <string name="time">time</string>
     <string name="building">Building</string>
     <string name="classroom">Classroom</string>
     <string name="addDropClasses">Add/Drop Classes</string>

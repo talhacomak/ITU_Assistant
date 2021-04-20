@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,8 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import static android.view.Gravity.CENTER;
+import static android.view.Gravity.END;
+
 public class frWednesday extends Fragment  {
-    DatabaseHelper db;
+    RoutineDatabase db;
     public frWednesday(){
 
     }
@@ -31,11 +32,11 @@ public class frWednesday extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wednesday, container, false);
-        db = new DatabaseHelper(getActivity());
+        db = new RoutineDatabase(getActivity());
         final Cursor databaseRowsCurDay = db.getRowsByDay("Wednesday");
 
-        TextView time[] = new TextView[20];
-        TextView className[] = new TextView[20];
+        TextView[] time = new TextView[20];
+        TextView[] className = new TextView[20];
 
         LinearLayout layout = view.findViewById(R.id.main_layout);
         for (int i=0; databaseRowsCurDay.moveToNext(); i++){
@@ -43,46 +44,76 @@ public class frWednesday extends Fragment  {
             className[i] = new TextView(getContext());
             int id = databaseRowsCurDay.getInt(0);
 
-            LinearLayout linNew = new LinearLayout(getContext());
-            linNew.setId(id);
-            linNew.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            linNew.setOrientation(LinearLayout.HORIZONTAL);
-            layout.addView(linNew);
+            LinearLayout linearlayoutLine = new LinearLayout(getContext());
+            linearlayoutLine.setId(id);
+            linearlayoutLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            linearlayoutLine.setOrientation(LinearLayout.HORIZONTAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200, LinearLayout.LayoutParams.WRAP_CONTENT);
-            float scale = Objects.requireNonNull(getContext()).getResources().getDisplayMetrics().density;
+            final float scale = getResources().getDisplayMetrics().density;
+
+            LinearLayout timeLayout = new LinearLayout(getContext());
+            timeLayout.setOrientation(LinearLayout.VERTICAL);
+            timeLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            time[i].setText(databaseRowsCurDay.getString(7));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);// height = 50 dp
             int pixels = (int) (3 * scale + 0.5f);
             params.setMarginStart(pixels);
             time[i].setLayoutParams(params);
-            time[i].setGravity(Gravity.START);
+            time[i].setGravity(CENTER);
             time[i].setTextSize(20);
-            linNew.addView(time[i]);
+            timeLayout.addView(time[i]);
+            linearlayoutLine.addView(timeLayout);
 
-            className[i].setLayoutParams(new LinearLayout.LayoutParams(695, LinearLayout.LayoutParams.WRAP_CONTENT));
-            className[i].setGravity(Gravity.CENTER);
+
+            LinearLayout taskNameLayout = new LinearLayout(getContext());
+            taskNameLayout.setOrientation(LinearLayout.VERTICAL);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMarginEnd((int)scale*7);
+            taskNameLayout.setGravity(CENTER);
+            taskNameLayout.setLayoutParams(params);
+            className[i].setText(databaseRowsCurDay.getString(3));
+            className[i].setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            className[i].setGravity(CENTER);
             className[i].setTextSize(20);
-            linNew.addView(className[i]);
+            taskNameLayout.addView(className[i]);
+            linearlayoutLine.addView(taskNameLayout);
 
+
+            LinearLayout deleteLayout = new LinearLayout(getContext());
+            deleteLayout.setOrientation(LinearLayout.VERTICAL);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMarginEnd((int)scale*7);
+            deleteLayout.setLayoutParams(params);
+            deleteLayout.setGravity(END);
             Button delete = new Button(getContext());
             delete.setId(id*100);
-            scale = getContext().getResources().getDisplayMetrics().density;
             pixels = (int) (25 * scale + 0.5f);
             delete.setLayoutParams(new LinearLayout.LayoutParams(pixels, pixels));
-            delete.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.trash_bin));
+            delete.setGravity(CENTER);
+            delete.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.trash_bin));
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int id = view.getId();
                     id /= 100;
                     db.deleteById(id);
-                    ((ViewGroup) view.getParent().getParent()).removeView((ViewGroup) view.getParent());
+                    ((ViewGroup) view.getParent().getParent().getParent()).removeView((ViewGroup) view.getParent().getParent());
                 }
             });
-            linNew.addView(delete);
+            deleteLayout.addView(delete);
+            linearlayoutLine.addView(deleteLayout);
 
+            LinearLayout infosLayout = new LinearLayout(getContext());
+            infosLayout.setOrientation(LinearLayout.VERTICAL);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMarginEnd((int)scale*7);
+            infosLayout.setLayoutParams(params);
+            infosLayout.setGravity(END);
             Button seeInfos = new Button(getContext());
-            seeInfos.setLayoutParams(new LinearLayout.LayoutParams(pixels, pixels));
+            params = new LinearLayout.LayoutParams(pixels, pixels);
+            seeInfos.setLayoutParams(params);
             seeInfos.setId(id*10000);
+            seeInfos.setGravity(CENTER);
             seeInfos.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittt));
             seeInfos.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,10 +135,10 @@ public class frWednesday extends Fragment  {
                     }
                 }
             });
-            linNew.addView(seeInfos);
+            infosLayout.addView(seeInfos);
+            linearlayoutLine.addView(infosLayout);
 
-            time[i].setText(databaseRowsCurDay.getString(7));
-            className[i].setText(databaseRowsCurDay.getString(3));
+            layout.addView(linearlayoutLine);
         }
 
         Button add_button = view.findViewById(R.id.add_button);

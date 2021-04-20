@@ -12,8 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/picker_dialogs" />
-            <option value="$PROJECT_DIR$/pickerdialogs" />
+            <option value="$PROJECT_DIR$/eventcalender" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

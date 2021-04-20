@@ -1,4 +1,4 @@
-include ':pickerdialogs'
-include ':picker_dialogs'
+include ':eventcalender'
 include ':app'
 rootProject.name='My Application'
+

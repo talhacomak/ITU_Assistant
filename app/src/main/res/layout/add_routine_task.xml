@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="@string/day"
+                    android:hint="@string/the_day"
                     android:importantForAutofill="no"
                     android:textSize="23sp" />
 

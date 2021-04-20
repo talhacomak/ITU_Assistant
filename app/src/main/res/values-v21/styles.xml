@@ -17,4 +17,8 @@
     <style name="TimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
         <item name="android:timePickerMode">spinner</item>
     </style>
+
+    <style name="NumberPickerText">
+        <item name="android:textSize">22sp</item>
+    </style>
 </resources>

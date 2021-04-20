@@ -67,14 +67,14 @@ public class add_routine_task extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(id == -1) {
-                    boolean res = localDb.addData(null, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
-                            day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), null, "-1");
+                    long res = localDb.addData(null, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
+                            day, end_time.getHour() + ":" + getMinuteFormat(end_time.getMinute()), start_time.getHour() + ":" +
+                                    getMinuteFormat(start_time.getMinute()), null, "-1");
                 }
                 else {
-                    boolean res = localDb.updateData(id, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
-                            day, end_time.getHour() + ":" + end_time.getMinute(), start_time.getHour() + ":" +
-                                    start_time.getMinute(), null, "-1");
+                    long res = localDb.updateData(id, location.getText().toString(), task_name.getText().toString(), room.getText().toString(),
+                            day, end_time.getHour() + ":" + getMinuteFormat(end_time.getMinute()), start_time.getHour() + ":" +
+                                    getMinuteFormat(start_time.getMinute()), null, "-1");
                 }
                 Intent in = new Intent(c1, routine.class);
                 startActivity(in);
@@ -125,5 +125,12 @@ public class add_routine_task extends AppCompatActivity {
                 adapterView.setSelection(selection);
             }
         });
+    }
+
+    private String getMinuteFormat(int minute) {
+        if(minute<10)
+            return "0" + minute;
+        else
+            return String.valueOf(minute);
     }
 }

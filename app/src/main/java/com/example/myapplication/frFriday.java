@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class frFriday extends Fragment  {
-    DatabaseHelper db;
+    RoutineDatabase db;
     public frFriday(){
 
     }
@@ -31,7 +30,7 @@ public class frFriday extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friday, container, false);
-        db = new DatabaseHelper(getActivity());
+        db = new RoutineDatabase(getActivity());
         final Cursor databaseRowsCurDay = db.getRowsByDay("Friday");
 
         TextView time[] = new TextView[20];

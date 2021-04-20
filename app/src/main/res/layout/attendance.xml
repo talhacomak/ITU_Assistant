@@ -19,7 +19,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
             android:gravity="center_horizontal"
-            android:text="@string/day"
+            android:text="@string/the_day"
             android:textSize="23sp" />
         <TextView
             style="@android:style/Widget.DeviceDefault.Light.TextView"
